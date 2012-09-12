@@ -1,31 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html> 
-
-<head> 
-	<title>PhoneGap Projcet</title> 
+	<head> 
+	<title>PhoneGap Pilot</title> 
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="css/jquery_mobile.css" />
+	<link rel="stylesheet" href="css/styles.css" />
 </head> 
 
 <body>
-	<div data-role="page" data-title="Home">
+	<div data-role="page">
 	    <div data-role="header">
-	        <h1>Bem-vindo</h1>
-	    </div>
+	        <h1>Contatos</h1>
+	    </div>	    
 	    
 	    
 	    
 	    <div data-role="content">
-	    	<div data-role="navbar">
-		    	<ul>
-		        	<li> <a href="produtoNovo.html" data-role="button" data-icon="plus" data-transition="pop">Novo Produto</a> </li>
-		        	<li> <a href="produtoLista.html" data-role="button" data-icon="search" data-transition="pop">Ver Produtos</a> </li>
-		        </ul>
-	        </div>
+	        <ul id="listaContatos" data-role="listaview" data-filter="true"></ul>
 	    </div>
 	    
-	    
+	        
 	    
 	    <div data-role="footer">
 	        <h4>Rodapé</h4>
@@ -33,11 +28,8 @@
 	</div>
 	
 	<script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
-	<script type="text/javascript" charset="utf-8">
-	
-	</script>
+	<script type="text/javascript" charset="utf-8" src="js/listaContatos.js"></script>
 </body>
 
 </html>

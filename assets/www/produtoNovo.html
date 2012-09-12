@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head> 
+	<title>PhoneGap Project</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="css/jquery_mobile.css" />
+</head> 
+
+<body>
+	<div data-role="page">
+	    <div data-role="header">
+	        <h1>Cadastrar produto</h1>
+	    </div>	    
+	    
+	    
+	    
+	    <div data-role="content">
+	    	<img id="produtoImagem" style="display:none; width:60px; height:60px;" src="" />
+	        <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
+	    </div>    
+
+
+	    
+	    <div data-role="footer">
+	        <h4>Rodapé</h4>
+	    </div>
+	</div>
+	
+	<script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		alert("TIRAR FOTO");
+		
+		var pictureSource;   // picture source
+	    var destinationType; // sets the format of returned value 
+	
+	    // Wait for Cordova to connect with the device
+	    //
+	    document.addEventListener("deviceready",onDeviceReady,false);
+	
+	    // Cordova is ready to be used!
+	    //
+	    function onDeviceReady() {
+	        pictureSource=navigator.camera.PictureSourceType;
+	        destinationType=navigator.camera.DestinationType;
+	    }
+
+		function tirarFoto() {
+			navigator.camera.getPicture(
+					function(imageData) {
+						alert("Tirando foto...");
+						var imagem = document.getElementById('produtoImagem');
+					    imagem.src = "data:image/jpeg;base64," + imageData;
+					    imagem.style.display("block");
+					},
+					function(message) {
+						alert('Erro ao tirar foto: ' + message);
+					},
+					{
+						quality: 50,
+						targetWidth: 80,
+					    destinationType: Camera.DestinationType.DATA_URL
+					}
+			);
+		}
+	</script>
+</body>
+
+</html>
