@@ -30,7 +30,7 @@ function tirarFoto() {
 }
 
 function lerCodigoBarras() {
-	window.plugins.barcodeScanner.scan( 
+	window.plugins.barcodeScanner.scan(
 		function(result) {
 			alert("We got a barcode\n" +
 				"Result: " + result.text + "\n" +
