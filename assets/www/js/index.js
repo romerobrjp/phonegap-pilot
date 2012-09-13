@@ -5,5 +5,4 @@ document.addEventListener("deviceready",onDeviceReady,false);
 // Cordova is ready to be used!
 //
 function onDeviceReady() {
-	alert("DEVIRE READY 1");
 }

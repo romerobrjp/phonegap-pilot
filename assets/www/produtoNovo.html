@@ -11,26 +11,38 @@
 <body>
 	<div data-role="page">
 	    <div data-role="header">
-	        <h1>Cadastrar produto</h1>
+	        <h1>Novo produto</h1>
 	    </div>	    
 	    
 	    
 	    
 	    <div data-role="content">
-	    	<img id="produtoImagem" style="display:none; width:60px; height:60px;" src="" />
+	    	<div data-role="fieldcontain">
+			    <label for="name">Nome:</label>
+			    <input type="text" name="nome" id="nome" value=""  />
+			    <label for="preco">Preço:</label>
+			    <input type="text" name="preco" id="preco" value=""  />
+			</div>
+			
+	    	<center>
+	    		<img id="produtoImagem" style="display:block; width:120px; height:180px; border: thin solid red;" src="" />
+	    	</center>
+	    	
 	        <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
-	    </div>    
+	        <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler código de barras</a>
+	    </div>
 
 
 	    
-	    <div data-role="footer">
-	        <h4>Rodapé</h4>
-	    </div>
+<!-- 	    <div data-role="footer"> -->
+<!-- 	        <h4>Rodapé</h4> -->
+<!-- 	    </div> -->
 	</div>
 	
 	<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
 </body>
 

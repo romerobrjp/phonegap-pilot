@@ -1,5 +1,3 @@
-alert("TIRAR FOTO");
-
 var pictureSource;   // picture source
 var destinationType; // sets the format of returned value 
 
@@ -12,24 +10,35 @@ document.addEventListener("deviceready",onDeviceReady,false);
 function onDeviceReady() {
     pictureSource=navigator.camera.PictureSourceType;
     destinationType=navigator.camera.DestinationType;
-    
-    alert("DEVIRE READY 2");
 }
 
 function tirarFoto() {
 	navigator.camera.getPicture(
 		function(imageData) {
-			var imagem = document.getElementById('produtoImagem');
-		    imagem.src = "data:image/jpeg;base64," + imageData;
-		    imagem.style.display("block");
+			$("#produtoImagem").css('display', 'block');
+			$("#produtoImagem").attr('src', "data:image/jpeg;base64," + imageData);
 		},
 		function(message) {
-			alert('Erro ao tirar foto: ' + message);
+			alert('Captura de imagem falhou: ' + message);
 		},
 		{
-			quality: 50,
+			quality: 75,
 			targetWidth: 80,
 		    destinationType: Camera.DestinationType.DATA_URL
+		}
+	);
+}
+
+function lerCodigoBarras() {
+	window.plugins.barcodeScanner.scan( 
+		function(result) {
+			alert("We got a barcode\n" +
+				"Result: " + result.text + "\n" +
+				"Format: " + result.format + "\n" +
+				"Cancelled: " + result.cancelled);
+		}, 
+		function(error) {
+			alert("Scanning failed: " + error);
 		}
 	);
 }
