@@ -25,11 +25,20 @@
 			</div>
 			
 	    	<center>
-	    		<img id="produtoImagem" style="display:block; width:120px; height:180px; border: thin solid red;" src="" />
+	    		<img id="produtoImagem" style="display: none; width: 140px; height: 200px;" src="" />
 	    	</center>
 	    	
 	        <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
 	        <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler código de barras</a>
+	        
+	        <div class="ui-block-a">
+	        	<a href="#" data-role="button" data-icon="back" data-transition="pop" onclick="navigator.app.loadUrl('file:///android_asset/www/index.html');">
+	        		Voltar
+	        	</a>
+	        </div>
+			<div class="ui-block-b">
+				<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="">Salvar</button>
+			</div>
 	    </div>
 
 
