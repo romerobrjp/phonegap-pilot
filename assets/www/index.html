@@ -2,7 +2,7 @@
 <html> 
 
 <head> 
-	<title>PhoneGap Projcet</title> 
+	<title>PhoneGap Project</title> 
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="css/jquery_mobile.css" />
@@ -19,8 +19,8 @@
 	    <div data-role="content">
 	    	<div data-role="navbar">
 		    	<ul>
-		        	<li> <a href="produtoNovo.html" data-role="button" data-icon="plus" data-transition="pop">Novo Produto</a> </li>
-		        	<li> <a href="produtoLista.html" data-role="button" data-icon="search" data-transition="pop">Ver Produtos</a> </li>
+		        	<li> <a href="#" data-role="button" data-icon="plus" data-transition="pop" onclick="navigator.app.loadUrl('file:///android_asset/www/produtoNovo.html');">Novo Produto</a> </li>
+		        	<li> <a href="#" data-role="button" data-icon="search" data-transition="pop" onclick="navigator.app.loadUrl('file:///android_asset/www/produtoLista.html');">Ver Produtos</a> </li>
 		        </ul>
 	        </div>
 	    </div>
@@ -32,12 +32,10 @@
 	    </div>
 	</div>
 	
-	<script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
-	<script type="text/javascript" charset="utf-8">
-	
-	</script>
+	<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
 </body>
 
 </html>
