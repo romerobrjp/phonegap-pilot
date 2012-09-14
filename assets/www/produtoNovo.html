@@ -1,58 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<div data-role="page" id="produtoNovo">
+  	<div data-role="fieldcontain">
+	    <label for="name">Nome:</label>
+	    <input type="text" name="nome" id="nome" value=""  />
+	    <label for="preco">Preço:</label>
+	    <input type="text" name="preco" id="preco" value=""  />
+	</div>
 
-<head> 
-	<title>PhoneGap Project</title> 
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<link rel="stylesheet" href="css/jquery_mobile.css" />
-</head> 
-
-<body>
-	<div data-role="page">
-	    <div data-role="header">
-	        <h1>Novo produto</h1>
-	    </div>	    
-	    
-	    
-	    
-	    <div data-role="content">
-	    	<div data-role="fieldcontain">
-			    <label for="name">Nome:</label>
-			    <input type="text" name="nome" id="nome" value=""  />
-			    <label for="preco">Preço:</label>
-			    <input type="text" name="preco" id="preco" value=""  />
-			</div>
-			
-	    	<center>
-	    		<img id="produtoImagem" style="display: none; width: 140px; height: 200px;" src="" />
-	    	</center>
-	    	
-	        <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
-	        <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler código de barras</a>
-	        
-	        <div class="ui-block-a">
-	        	<a href="#" data-role="button" data-icon="back" data-transition="pop" onclick="navigator.app.loadUrl('file:///android_asset/www/index.html');">
-	        		Voltar
-	        	</a>
-	        </div>
-			<div class="ui-block-b">
-				<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="">Salvar</button>
-			</div>
-	    </div>
-
-
-	    
-<!-- 	    <div data-role="footer"> -->
-<!-- 	        <h4>Rodapé</h4> -->
-<!-- 	    </div> -->
+  	<center>
+  		<img id="produtoImagem" style="display: none; width: 140px; height: 200px;" src="" />
+ 	</center>
+ 	
+     <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
+     <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler código de barras</a>
+     
+	<div class="ui-block-a">
+		<a href="#" data-role="button" data-icon="back" data-transition="pop" onclick="navigator.app.loadUrl('file:///android_asset/www/index.html');">
+			Voltar
+		</a>
 	</div>
 	
-	<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
-</body>
-
-</html>
+	<div class="ui-block-b">
+		<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="">Salvar</button>
+	</div>
+</div>
