@@ -1,3 +1,6 @@
+$("#produtoNovo").live("pageshow", function(event){
+});
+
 var pictureSource;   // picture source
 var destinationType; // sets the format of returned value 
 
@@ -23,7 +26,7 @@ function tirarFoto() {
 		},
 		{
 			quality: 75,
-			targetWidth: 80,
+			targetWidth: 120,
 		    destinationType: Camera.DestinationType.DATA_URL
 		}
 	);
@@ -32,10 +35,7 @@ function tirarFoto() {
 function lerCodigoBarras() {
 	window.plugins.barcodeScanner.scan(
 		function(result) {
-			alert("We got a barcode\n" +
-				"Result: " + result.text + "\n" +
-				"Format: " + result.format + "\n" +
-				"Cancelled: " + result.cancelled);
+			$("#codigoBarras").val(result.text);
 		}, 
 		function(error) {
 			alert("Scanning failed: " + error);

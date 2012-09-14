@@ -1,25 +1,33 @@
 <div data-role="page" id="produtoNovo">
-  	<div data-role="fieldcontain">
-	    <label for="name">Nome:</label>
-	    <input type="text" name="nome" id="nome" value=""  />
-	    <label for="preco">Preço:</label>
-	    <input type="text" name="preco" id="preco" value=""  />
+	<div data-role="header">
+		<h1>Cadastrar Produto</h1>
 	</div>
 
-  	<center>
-  		<img id="produtoImagem" style="display: none; width: 140px; height: 200px;" src="" />
- 	</center>
- 	
-     <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
-     <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler código de barras</a>
-     
-	<div class="ui-block-a">
-		<a href="#" data-role="button" data-icon="back" data-transition="pop" onclick="navigator.app.loadUrl('file:///android_asset/www/index.html');">
-			Voltar
-		</a>
-	</div>
+	<div data-role="content">
+	  	<div data-role="fieldcontain">
+		    <label for="name">Nome:</label>
+		    <input type="text" name="nome" id="nome" value=""  />
+		    <label for="preco">Preco:</label>
+		    <input type="text" name="preco" id="preco" value=""  />
+		    <label for="preco">Codigo de barras:</label>
+		    <input type="text" name="codigoBarras" id="preco" value=""  />
+		</div>
 	
-	<div class="ui-block-b">
-		<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="">Salvar</button>
+	  	<center>
+	  		<img id="produtoImagem" style="display: none; width: 140px; height: 200px;" src="" />
+	 	</center>
+	 	
+	     <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
+	     <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler codigo de barras</a>
+	     
+		<div class="ui-block-a">
+			<a href="#" data-role="button" data-icon="back" data-transition="pop" onclick="index.html">
+				Voltar
+			</a>
+		</div>
+		
+		<div class="ui-block-b">
+			<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="produtoAdicionar();">Salvar</button>
+		</div>
 	</div>
 </div>

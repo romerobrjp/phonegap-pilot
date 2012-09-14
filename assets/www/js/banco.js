@@ -1,11 +1,28 @@
 var db;
 
+function erro(e) {
+	console.log("transacao erro");
+	alert(e);
+}
+
+function finallyy() {
+	console.log("transacao finally");
+}
+
+function configurarBanco() {
+	db = window.openDatabase("phonegapProject", "1.0", "phonegapProject", (1024 * 1024) * 5);
+
+	if (db) {
+		db.transaction(gerarTabelas, erro, finallyy);
+	}
+}
+
 function gerarTabelas(tx) {
 	//CRIANDO AS TABELAS
-	console.log("---transação iniciada---");
+	console.log("---transacao iniciada---");
 	
 	//PRODUTOS
-	tx.executeSql('DROP TABLE IF EXISTS PRODUTO');
+	console.log("Configurando tabela PRODUTO...")
 	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO " +
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -18,46 +35,31 @@ function gerarTabelas(tx) {
 	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('CAFE', 3.00)");
 	
 	//PRECOS DOS PRODUTOS
-//	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO_PRECOS " +
-//			"(" +
-//			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//			"VALOR DECIMAL(10,2), " +
-//			"DATA DATE, POSICAO VARCHAR(100)," +
-//			"PRODUTO_ID INTEGER," +
-//			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
-//			")");
+	console.log("Configurando tabela PRODUTO_PRECOS...")
+	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO_PRECOS " +
+			"(" +
+			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			"VALOR DECIMAL(10,2), " +
+			"DATA DATE, " +
+			"PRODUTO_ID INTEGER, " +
+			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
+			")");
 	
 	//POSICAO
-//	tx.executeSql("CREATE TABLE IF NOT EXISTS PRECO_POCISAO " +
-//			"(" +
-//			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//			"LONGITUDE REAL, " +
-//			"LATITUDE REAL, " +
-//			"PRECO_ID INTEGER, " +
-//			"FOREIGN KEY(PRECO_ID) REFERENCES PRODUTO_PRECOS(ID)" +
-//			")");
+	console.log("Configurando tabela PRECO_POSICAO...")
+	tx.executeSql("CREATE TABLE IF NOT EXISTS PRECO_POCISAO " +
+			"(" +
+			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			"LONGITUDE REAL, " +
+			"LATITUDE REAL, " +
+			"PRECO_ID INTEGER, " +
+			"FOREIGN KEY(PRECO_ID) REFERENCES PRODUTO_PRECOS(ID)" +
+			")");
 	
-	console.log("---transação finalizada---");
+	console.log("---transacao finalizada---");
 }
 
-function erro(e) {
-	console.log("transação erro");
-	alert(e);
-}
-
-function finallyy() {
-	console.log("transação finally");
-}
-
-function configuraBanco() {
-	db = window.openDatabase("phonegapProject", "1.0", "phonegapProject", (1024 * 1024) * 5);
-
-	if (db) {
-		db.transaction(gerarTabelas, erro, finallyy);
-	}
-}
-
-function consultaBanco() {
+function testarConsultaBanco() {
 	if (db) {
 		db.transaction(
 			function(tx) {
@@ -67,18 +69,63 @@ function consultaBanco() {
 					[], 
 					function consultaSucesso(tx, results) {
 						var len = results.rows.length;
-					    alert("Tabela PRODUTO tem: " + len + " linha(s).");
+					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					        alert("Row = " + i + " Nome = " + results.rows.item(i).NOME + " Preço =  " + results.rows.item(i).PRECO);
+					        alert("Row = " + i + " Nome = " + results.rows.item(i).NOME + " Preco =  " + results.rows.item(i).PRECO);
 					    }						
 					},
 					function(err) {
-						alert('Aguia no executeSQL: ' + err.code + ' - ' + err.message);
+						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
 					}
 				)
 			},
 			function errorCB(err) {
-			    alert("Error processing SQL: " + err.code + ' - ' + err.message);
+			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+			},
+			function successCB() {
+			    console.log("Success!");
+			}
+		);	
+	}
+}
+
+function produtoAdicionar(nome, preco, codigo_barras) {
+	if (db) {
+		var sql = "INSERT INTO PRODUTO (NOME, PRECO, CODIGO_BARRAS) VALUES (" + nome + ", " + preco + ", " + codigo_barras + ")";
+		
+		db.transaction(
+			function(tx) {
+				tx.executeSql(sql);
+			}
+		);
+	}
+	
+	testarConsultaBanco();
+}
+
+function pesquisaProdutoPorNome(nome) {
+	if (db) {
+		db.transaction(
+			function(tx) {
+				var sql = "SELECT * FROM PRODUTO WHERE NOME LIKE '%"+ nome + "%'";				
+				tx.executeSql(
+					sql, 
+					[], 
+					function consultaSucesso(tx, results) {
+						var len = results.rows.length;
+					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
+					    for (var i=0; i<len; i++) {
+					    	console.log("Fetch na linha " + i+1);
+					        $('#resultados').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - R$:' + results.rows.item(i).PRECO + '</a> </li>');
+					    }						
+					},
+					function(err) {
+						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
+					}
+				)
+			},
+			function errorCB(err) {
+			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
 			},
 			function successCB() {
 			    console.log("Success!");
@@ -88,6 +135,6 @@ function consultaBanco() {
 }
 
 $(function() {
-	configuraBanco();
-	consultaBanco();
+	configurarBanco();
+	testarConsultaBanco();
 });
