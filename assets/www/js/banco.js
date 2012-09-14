@@ -69,7 +69,7 @@ function consultaBanco() {
 						var len = results.rows.length;
 					    alert("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					        alert("Row = " + i + " ID = " + results.rows.item(i).nome + " Data =  " + results.rows.item(i).preco);
+					        alert("Row = " + i + " Nome = " + results.rows.item(i).NOME + " Preço =  " + results.rows.item(i).PRECO);
 					    }						
 					},
 					function(err) {
@@ -81,7 +81,7 @@ function consultaBanco() {
 			    alert("Error processing SQL: " + err.code + ' - ' + err.message);
 			},
 			function successCB() {
-			    alert("Success!");
+			    console.log("Success!");
 			}
 		);	
 	}
