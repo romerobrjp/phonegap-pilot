@@ -27,12 +27,12 @@ function gerarTabelas(tx) {
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"NOME VARCHAR(100), " +
-			"PRECO DECIMAL(10,2), " +
 			"CODIGO_BARRAS VARCHAR(100), " +
 			"IMAGEM BLOB" +
 			")");
 	
-	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('CAFE', 3.00)");
+	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('cafe', 3.00)");
+	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('batata', 1.90)");
 	
 	//PRECOS DOS PRODUTOS
 	console.log("Configurando tabela PRODUTO_PRECOS...")
@@ -71,8 +71,9 @@ function testarConsultaBanco() {
 						var len = results.rows.length;
 					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					        alert("Row = " + i + " Nome = " + results.rows.item(i).NOME + " Preco =  " + results.rows.item(i).PRECO);
-					    }						
+					        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - R$:' + results.rows.item(i).PRECO + '</a> </li>');
+					        $('#resultados_index').listview('refresh');
+					    }
 					},
 					function(err) {
 						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
@@ -81,9 +82,11 @@ function testarConsultaBanco() {
 			},
 			function errorCB(err) {
 			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+			    return false;
 			},
 			function successCB() {
 			    console.log("Success!");
+			    return true;
 			}
 		);	
 	}
@@ -99,7 +102,7 @@ function produtoAdicionar(nome, preco, codigo_barras) {
 			}
 		);
 	}
-	
+	$.mobile.changePage( "index.html", { transition: "slideup"} );
 	testarConsultaBanco();
 }
 
@@ -107,7 +110,7 @@ function pesquisarProdutoPorNome(nome) {
 	if (db) {
 		db.transaction(
 			function(tx) {
-				var sql = "SELECT * FROM PRODUTO WHERE NOME LIKE '%"+ nome + "%'";				
+				var sql = "SELECT * FROM PRODUTO WHERE NOME LIKE '%" + nome + "%'";				
 				tx.executeSql(
 					sql, 
 					[], 
@@ -127,9 +130,11 @@ function pesquisarProdutoPorNome(nome) {
 			},
 			function errorCB(err) {
 			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+			    return false;
 			},
 			function successCB() {
 			    console.log("Success!");
+			    return true;
 			}
 		);	
 	}

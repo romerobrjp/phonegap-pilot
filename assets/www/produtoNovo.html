@@ -10,7 +10,7 @@
 		    <label for="preco">Preco:</label>
 		    <input type="text" name="preco" id="preco" value=""  />
 		    <label for="preco">Codigo de barras:</label>
-		    <input type="text" name="codigoBarras" id="preco" value=""  />
+		    <input type="text" name="codigoBarras" id="codigoBarras" value=""  />
 		</div>
 	
 	  	<center>
@@ -27,7 +27,9 @@
 		</div>
 		
 		<div class="ui-block-b">
-			<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="produtoAdicionar();">Salvar</button>
+			<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="produtoAdicionar($('#nome'), $('#preco'), $('#codigoBarras'));">
+				Salvar
+			</button>
 		</div>
 	</div>
 </div>
