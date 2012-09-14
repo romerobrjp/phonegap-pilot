@@ -61,7 +61,7 @@ function consultaBanco() {
 	if (db) {
 		db.transaction(
 			function(tx) {
-				var sql = "SELECT * FROM CAFE";				
+				var sql = "SELECT * FROM PRODUTO";				
 				tx.executeSql(
 					sql, 
 					[], 
