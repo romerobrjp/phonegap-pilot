@@ -89,4 +89,5 @@ function consultaBanco() {
 
 $(function() {
 	configuraBanco();
+	consultaBanco();
 });
