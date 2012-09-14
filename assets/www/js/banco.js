@@ -22,7 +22,7 @@ function gerarTabelas(tx) {
 	console.log("---transacao iniciada---");
 	
 	//PRODUTOS
-	console.log("Configurando tabela PRODUTO...")
+	console.log("Configurando tabela PRODUTO...")	
 	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO " +
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -103,7 +103,7 @@ function produtoAdicionar(nome, preco, codigo_barras) {
 	testarConsultaBanco();
 }
 
-function pesquisaProdutoPorNome(nome) {
+function pesquisarProdutoPorNome(nome) {
 	if (db) {
 		db.transaction(
 			function(tx) {
@@ -117,7 +117,8 @@ function pesquisaProdutoPorNome(nome) {
 					    for (var i=0; i<len; i++) {
 					    	console.log("Fetch na linha " + i+1);
 					        $('#resultados').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - R$:' + results.rows.item(i).PRECO + '</a> </li>');
-					    }						
+					    }
+					    $('#resultados').listview('refresh');
 					},
 					function(err) {
 						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);

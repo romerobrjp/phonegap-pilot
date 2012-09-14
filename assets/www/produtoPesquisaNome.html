@@ -9,13 +9,11 @@
 		    <input type="text" name="nome" id="nome" value=""  />
 		</div>
 	 	
-		<a href="#" data-role="button" onclick="pesquisaProdutoPorNome();">Pesquisar</a>
+		<a href="#" data-role="button" onclick="pesquisarProdutoPorNome($(#'nome').val());">Pesquisar</a>
 		
-		<div id="div_resultados">
-			<ul id="resultados">
-				
-			</ul>
-		</div>
+		<ol id="resultados" data-role="list-view" data-theme="b">
+			
+		</ol>
 	     
 		<div class="ui-block-a">
 			<a href="index.html" data-role="button" data-icon="back" data-transition="pop">
