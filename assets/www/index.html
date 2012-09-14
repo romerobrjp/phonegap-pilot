@@ -6,6 +6,9 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="css/jquery_mobile.css" />
+	<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
 </head> 
 
 <body>
@@ -19,6 +22,7 @@
 		    	<ul>
 		        	<li> <a href="produtoNovo.html" data-role="button" data-icon="plus" data-transition="pop">Novo Produto</a> </li>
 		        	<li> <a href="produtoPesquisa.html" data-role="button" data-icon="search" data-transition="pop">Ver Produtos</a> </li>
+		        	<li> <a href="gps.html" data-role="button" data-icon="star" data-transition="pop">Geo Localização</a> </li>
 		        </ul>
 	        </div>
 	        
@@ -30,14 +34,22 @@
 	    <div data-role="footer">
 	        <h4>Rodape</h4>
 	    </div>
+	    
+	    <script type="text/javascript">
+		    $("#produtoPesquisaNome").live("pageshow", function(event) {
+		    	produtoListarTodos();
+			});
+		    
+		    $("#gps").live("pageshow", function(event) {
+		    	navigator.geolocation.getCurrentPosition(onSuccess, onError);
+			});
+		</script>	    
 	</div>
 	
-	<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/banco.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/gps.js"></script>
 </body>
 
 </html>

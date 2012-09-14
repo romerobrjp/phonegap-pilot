@@ -1,24 +1,21 @@
 <div data-role="page" id="produtoPesquisaNome">
 	<div data-role="header">
+		<a href="produtoPesquisa.html" data-icon="back" data-transition="pop">Voltar</a>
 		<h1>Pesquisar Produto por Nome</h1>
 	</div>
 
 	<div data-role="content">
-	  	<div data-role="fieldcontain">
-		    <label for="name">Nome:</label>
-		    <input type="text" name="nome" id="nome" value=""  />
-		</div>
+<!-- 	  	<div data-role="fieldcontain"> -->
+<!-- 		    <label for="name">Nome:</label> -->
+<!-- 		    <input type="text" name="nome" id="nome" value=""  /> -->
+<!-- 		</div> -->
 	 	
-		<a href="#" data-role="button" onclick="pesquisarProdutoPorNome($(#'nome').val());">Pesquisar</a>
+<!-- 		<a href="#" data-role="button" onclick="pesquisarProdutoPorNome($(#'nome').val());">Pesquisar</a> -->
 		
-		<ol id="resultados" data-role="list-view" data-theme="b">
+		<ol id="listaTodosProdutos" data-role="listview" data-filter="true">
 			
 		</ol>
-	     
-		<div class="ui-block-a">
-			<a href="index.html" data-role="button" data-icon="back" data-transition="pop">
-				Voltar
-			</a>
-		</div>
 	</div>
+	
 </div>
+

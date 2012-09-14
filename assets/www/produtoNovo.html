@@ -1,6 +1,8 @@
 <div data-role="page" id="produtoNovo">
 	<div data-role="header">
+		<a href="index.html" data-icon="back">Voltar</a>
 		<h1>Cadastrar Produto</h1>
+		<a href="index.html" data-icon="check" data-theme="b" data-transition="pop" onclick="produtoAdicionar($('#nome'), $('#preco'), $('#codigoBarras'));">Salavar</a>
 	</div>
 
 	<div data-role="content">
@@ -19,17 +21,5 @@
 	 	
 	     <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
 	     <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler codigo de barras</a>
-	     
-		<div class="ui-block-a">
-			<a href="#" data-role="button" data-icon="back" data-transition="pop" onclick="index.html">
-				Voltar
-			</a>
-		</div>
-		
-		<div class="ui-block-b">
-			<button type="submit" data-theme="a" data-icon="check" data-transition="pop" onclick="produtoAdicionar($('#nome'), $('#preco'), $('#codigoBarras'));">
-				Salvar
-			</button>
-		</div>
 	</div>
 </div>
