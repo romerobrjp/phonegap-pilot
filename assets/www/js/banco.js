@@ -15,7 +15,7 @@ function gerarTabelas(tx) {
 			"IMAGEM BLOB" +
 			")");
 	
-	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('CAFE', 3.00");
+	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('CAFE', 3.00)");
 	
 	//PRECOS DOS PRODUTOS
 //	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO_PRECOS " +
