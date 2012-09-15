@@ -2,10 +2,16 @@
 	<div data-role="header">
 		<a href="index.html" data-icon="back">Voltar</a>
 		<h2>Novo Produto</h2>
-		<a href="index.html" data-icon="check" data-theme="b" data-transition="pop" onclick="produtoAdicionar($('#nome'), $('#preco'), $('#codigoBarras'));">Salvar</a>
+		<a id="botaoCadastrarProduto" href="index.html" data-icon="check" data-theme="b" data-transition="pop">		
+			Salvar
+		</a>
 	</div>
 
 	<div data-role="content">
+		<div data-role="content" style="padding: 15px" align="center">
+	  		<div id="mapa_container" style="width: 100%; height: 200px"></div>
+        </div>
+	
 	  	<div data-role="fieldcontain">
 		    <label for="name">Nome:</label>
 		    <input type="text" name="nome" id="nome" value=""  />
@@ -13,13 +19,26 @@
 		    <input type="text" name="preco" id="preco" value=""  />
 		    <label for="preco">Codigo de barras:</label>
 		    <input type="text" name="codigoBarras" id="codigoBarras" value=""  />
-		</div>
-	
-	  	<center>
-	  		<img id="produtoImagem" style="display: none; width: 140px; height: 200px;" src="" />
-	 	</center>
+		    <input type="hidden" name="latitude" id="latitude" value=""  />
+		    <input type="hidden" name="longitude" id="longitude" value=""  />
+		</div>  	
 	 	
 	     <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
 	     <a href="#" data-role="button" onclick="lerCodigoBarras();">Ler codigo de barras</a>
+	     
+	     <div align="center">
+	  		<img id="produtoImagem" style="display: none; width: 80%; height: 260px;" src="" />
+	 	</div>
 	</div>
+	
+	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
+	<script type="text/javascript">
+		$("#produtoNovo").live("pageshow", function(event) {
+// 			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+			
+			$("#botaoCadastrarProduto").click(function() {
+				produtoCadastrar($('#nome').val(), $('#codigoBarras').val(), $('#produtoImagem').attr('src'), $('#preco').val(), $('#longitude').val(), $('#latitude').val());
+			});
+		});
+	</script>
 </div>

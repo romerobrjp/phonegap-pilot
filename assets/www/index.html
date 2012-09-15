@@ -7,50 +7,87 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="css/jquery_mobile.css" />
 	<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
+	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>	 
 </head> 
 
 <body>
 	<div data-role="page" data-title="Home" id="index">
-	    <div data-role="header">
+	    <div data-role="header" fixed="true">
 	        <h1>Bem-vindo</h1>
-	    </div>
-	    
-	    <div data-role="content">
-	    	<div data-role="navbar">
+	        <div data-role="navbar">
 		    	<ul>
 		        	<li> <a href="produtoNovo.html" data-role="button" data-icon="plus" data-transition="pop">Novo Produto</a> </li>
 		        	<li> <a href="produtoPesquisa.html" data-role="button" data-icon="search" data-transition="pop">Ver Produtos</a> </li>
 		        	<li> <a href="gps.html" data-role="button" data-icon="star" data-transition="pop">Geo Localização</a> </li>
 		        </ul>
 	        </div>
-	        
-	        <ol id="resultados_index" data-role="list-view" data-theme="b">
+	    </div>
+	    
+	    <div data-role="content">
+	        <ol id="resultados_index" data-role="listview" data-theme="b">
 			
 			</ol>
 	    </div>
 	    
-	    <div data-role="footer">
+	    <div data-role="footer" fixed="true">
 	        <h4>Rodape</h4>
 	    </div>
 	    
+	    <script type="text/javascript" charset="utf-8" src="js/banco.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/gps.js"></script>
 	    <script type="text/javascript">
+		 	// Wait for Cordova to connect with the device
+			//
+			document.addEventListener("deviceready",onDeviceReady,false);
+		
+			// Cordova is ready to be used!
+			//
+			function onDeviceReady() {
+				configurarBanco();
+				testarConsultaBanco();
+			}
+	    
 		    $("#produtoPesquisaNome").live("pageshow", function(event) {
 		    	produtoListarTodos();
 			});
 		    
-		    $("#gps").live("pageshow", function(event) {
-		    	navigator.geolocation.getCurrentPosition(onSuccess, onError);
-			});
+		    function testarConsultaBanco() {
+				if (db) {
+					db.transaction(
+						function(tx) {
+							var sql = "SELECT * FROM PRODUTO";				
+							tx.executeSql(
+								sql, 
+								[], 
+								function(tx, results) {
+									var len = results.rows.length;
+								    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
+								    for (var i=0; i<len; i++) {
+								        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - ' + results.rows.item(i).CODIGO_BARRAS + '</a> </li>');
+								    }
+								    $('#resultados_index').listview('refresh');
+								},
+								function(err) {
+									alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
+								}
+							)
+						},
+						function errorCB(err) {
+						    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+						    return false;
+						},
+						function successCB() {
+						    console.log("Success!");
+						    return true;
+						}
+					);	
+				}
+			}
 		</script>	    
 	</div>
-	
-	<script type="text/javascript" charset="utf-8" src="js/banco.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/gps.js"></script>
 </body>
 
 </html>

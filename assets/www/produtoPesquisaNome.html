@@ -1,7 +1,7 @@
 <div data-role="page" id="produtoPesquisaNome">
 	<div data-role="header">
 		<a href="produtoPesquisa.html" data-icon="back" data-transition="pop">Voltar</a>
-		<h1>Pesquisar Produto por Nome</h1>
+		<h1>Pesquisar</h1>
 	</div>
 
 	<div data-role="content">
@@ -17,5 +17,10 @@
 		</ol>
 	</div>
 	
+	<script type="text/javascript">
+		$("#produtoPesquisaNome").live("pageshow", function(event) {
+			produtoListarTodos();
+		});
+	</script>
 </div>
 

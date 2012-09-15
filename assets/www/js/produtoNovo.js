@@ -1,20 +1,3 @@
-$("#produtoNovo").live("pageshow", function(event){
-});
-
-var pictureSource;   // picture source
-var destinationType; // sets the format of returned value 
-
-// Wait for Cordova to connect with the device
-//
-document.addEventListener("deviceready",onDeviceReady,false);
-
-// Cordova is ready to be used!
-//
-function onDeviceReady() {
-    pictureSource=navigator.camera.PictureSourceType;
-    destinationType=navigator.camera.DestinationType;
-}
-
 function tirarFoto() {
 	navigator.camera.getPicture(
 		function(imageData) {
@@ -25,9 +8,9 @@ function tirarFoto() {
 			alert('Captura de imagem falhou: ' + message);
 		},
 		{
-			quality: 75,
+			quality: 50,
 			targetWidth: 120,
-		    destinationType: Camera.DestinationType.DATA_URL
+			navigator.camera.DestinationType: Camera.DestinationType.DATA_URL
 		}
 	);
 }
@@ -41,4 +24,71 @@ function lerCodigoBarras() {
 			alert("Scanning failed: " + error);
 		}
 	);
+}
+
+function produtoCadastrar(nome, codigo_barras, imagem, preco, longi, lati) {
+	if (db) {
+		var sql = "INSERT INTO PRODUTO (NOME, CODIGO_BARRAS, IMAGEM) VALUES ('" + nome + "', '" + codigo_barras + "', '" + imagem + "')";
+		
+		db.transaction(
+			function(tx) {
+				alert("INICIANDO INSERT");
+				tx.executeSql(sql);
+				alert("EXECUTOU INSERT");
+			},
+			function errorCB(err) {
+			    alert("Erro ao inserir Produto: " + err.code + ' - ' + err.message);
+			    return false;
+			},
+			function successCB() {
+			    alert("Sucesso ao inserir Produto!");
+			    return true;
+			}
+		);
+	}
+	
+	var produtoId = pesquisarProdutoIdPorCodigoBarras(codigo_barras);
+	
+	if (db) {
+		var sql = "INSERT INTO PRODUTO_PRECOS (PRECO, DATA, LONGITUDE, LATITUDE, PRODUTO_ID) VALUES (" + preco + ", select date('now'), " + longi + ", " + lati + ", " + produtoId + ")";
+		
+		db.transaction(
+			function(tx) {
+				tx.executeSql(sql);
+			}
+		);
+	}
+	alert("Produto cadastrado com sucesso!");
+	$.mobile.changePage( "index.html", { transition: "slideup"} );
+}
+
+function pesquisarProdutoIdPorCodigoBarras(codigo_barras) {
+	if (db) {
+		db.transaction(
+			function(tx) {
+				var sql = "SELECT * FROM PRODUTO WHERE CODIGO_BARRAS LIKE '" + codigo_barras + "'";				
+				tx.executeSql(
+					sql, 
+					[], 
+					function consultaSucesso(tx, results) {
+						var len = results.rows.length;
+					    for (var i=0; i<len; i++) {
+					        return results.rows.item(i).ID;
+					    }
+					},
+					function(err) {
+						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
+					}
+				)
+			},
+			function errorCB(err) {
+			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+			    return false;
+			},
+			function successCB() {
+			    console.log("Sucesso na consulta de ID por Codgio de Barras!");
+			    return true;
+			}
+		);	
+	}
 }

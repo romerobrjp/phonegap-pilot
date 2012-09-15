@@ -3,23 +3,22 @@
 //   the current GPS coordinates
 //
 var onSuccess = function(position) {
-	var element = document.getElementById('geolocal');
-	
-	var url = "http://maps.google.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude + "&zoom=13&size=320x480&maptype=roadmap&key=MyGoogleMapsAPIKey&sensor=true";
-    $('#geomapa').attr('src', url);
+//	var element = document.getElementById('geolocal');
+//	
+//	var url = "http://maps.google.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude + "&zoom=13&size=320x480&maptype=roadmap&key=MyGoogleMapsAPIKey&sensor=true";
+//    $('#geomapa').attr('src', url);
 
 	initializeGmap(position.coords.latitude, position.coords.longitude );
 	
-    element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
-					    'Longitude: '          + position.coords.longitude             + '<br />' +
-					    'Altitude: '           + position.coords.altitude              + '<br />' +
-					    'Accuracy: '           + position.coords.accuracy              + '<br />' +
-					    'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-					    'Heading: '            + position.coords.heading               + '<br />' +
-					    'Speed: '              + position.coords.speed                 + '<br />' +
-					    'Timestamp: '          + new Date(position.timestamp)          + '<br />' +
-					    'URL: '          	   + url						           + '<br />';
-    
+//    element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+//					    'Longitude: '          + position.coords.longitude             + '<br />' +
+//					    'Altitude: '           + position.coords.altitude              + '<br />' +
+//					    'Accuracy: '           + position.coords.accuracy              + '<br />' +
+//					    'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+//					    'Heading: '            + position.coords.heading               + '<br />' +
+//					    'Speed: '              + position.coords.speed                 + '<br />' +
+//					    'Timestamp: '          + new Date(position.timestamp)          + '<br />' +
+//					    'URL: '          	   + url						           + '<br />';
     
 };
 

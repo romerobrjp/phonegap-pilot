@@ -19,18 +19,16 @@ function configurarBanco() {
 
 function gerarTabelas(tx) {
 	//CRIANDO AS TABELAS
-	console.log("---transacao iniciada---");
+	alert("---CRIANDO TABELAS---");
 	
 	//PRODUTOS
 	console.log("Configurando tabela PRODUTO...")
-	
-	tx.executeSql("DROP TABLE IF EXISTS PRODUTO");
 	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO " +
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"NOME VARCHAR(100), " +
 			"CODIGO_BARRAS VARCHAR(100), " +
-			"IMAGEM BLOB" +
+			"IMAGEM TEXT" +
 			")");
 	
 	//PRECOS DOS PRODUTOS
@@ -39,106 +37,14 @@ function gerarTabelas(tx) {
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"PRECO DECIMAL(10,2), " +
-			"DATA DATE, " +
+			"DATA DATETIME, " +
 			"LONGITUDE REAL, " +
 			"LATITUDE REAL, " +
 			"PRODUTO_ID INTEGER, " +
 			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
 			")");
 	
-	console.log("---transacao finalizada---");
-}
-
-function testarConsultaBanco() {
-	if (db) {
-		db.transaction(
-			function(tx) {
-				var sql = "SELECT * FROM PRODUTO";				
-				tx.executeSql(
-					sql, 
-					[], 
-					function consultaSucesso(tx, results) {
-						var len = results.rows.length;
-					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
-					    for (var i=0; i<len; i++) {
-					        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - R$:' + results.rows.item(i).PRECO + '</a> </li>');
-					    }
-					    $('#resultados_index').listview('refresh');
-					},
-					function(err) {
-						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
-					}
-				)
-			},
-			function errorCB(err) {
-			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
-			    return false;
-			},
-			function successCB() {
-			    console.log("Success!");
-			    return true;
-			}
-		);	
-	}
-}
-
-function produtoCadastrar(nome, preco, codigo_barras, preco, long, lati) {
-	var produtoId = pesquisarProdutoIdPorNome(nome);
-	
-	if (db) {
-		var sql = "INSERT INTO PRODUTO (NOME, PRECO, CODIGO_BARRAS) VALUES (" + nome + ", " + preco + ", " + codigo_barras + ")";
-		
-		db.transaction(
-			function(tx) {
-				tx.executeSql(sql);
-			}
-		);
-	}
-	
-	if (db) {
-		var sql = "INSERT INTO PRODUTO_PRECOS (PRECO, LONGITUDE, LATITUDE, PRODUTO_ID) VALUES (" + preco + ", " + long + ", " + lati + ", " + produtoId + ")";
-		
-		db.transaction(
-			function(tx) {
-				tx.executeSql(sql);
-			}
-		);
-	}
-	
-	alert("Produto cadastrado com sucesso!");
-	$.mobile.changePage( "index.html", { transition: "slideup"} );
-}
-
-function pesquisarProdutoIdPorNome(nome) {
-	if (db) {
-		db.transaction(
-			function(tx) {
-				var sql = "SELECT * FROM PRODUTO WHERE NOME LIKE '%" + nome + "%'";				
-				tx.executeSql(
-					sql, 
-					[], 
-					function consultaSucesso(tx, results) {
-						var len = results.rows.length;
-					    for (var i=0; i<len; i++) {
-					        produto { id: results.rows.item(i).ID };
-					    }
-					    return produto.id;
-					},
-					function(err) {
-						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
-					}
-				)
-			},
-			function errorCB(err) {
-			    alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
-			    return false;
-			},
-			function successCB() {
-			    console.log("Success!");
-			    return true;
-			}
-		);	
-	}
+	alert("TABELAS CRIADAS");
 }
 
 function produtoListarTodos() {
@@ -153,8 +59,8 @@ function produtoListarTodos() {
 						var len = results.rows.length;
 					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					        $('#listaTodosProdutos').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - R$:' + 
-					        		results.rows.item(i).PRECO + '</a> </li>');
+					        $('#listaTodosProdutos').append('<li> <img src="' + results.rows.item(i).IMAGEM + '" widht="100%" length="50%"> <br/> <a href="#">' + 
+					        		results.rows.item(i).NOME + '<ul> <li> R$:' + results.rows.item(i).PRECO + ' - ' + results.rows.item(i).CODIGO_BARRAS + '</li> </ul> </a> </li>');
 					    }
 					    $('#listaTodosProdutos').listview('refresh');
 					},
@@ -174,8 +80,3 @@ function produtoListarTodos() {
 		);	
 	}
 }
-
-
-$(function() {
-	configurarBanco();
-});
