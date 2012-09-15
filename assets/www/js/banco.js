@@ -11,7 +11,6 @@ function finallyy() {
 
 function configurarBanco() {
 	db = window.openDatabase("phonegapProject", "1.0", "phonegapProject", (1024 * 1024) * 5);
-
 	if (db) {
 		db.transaction(gerarTabelas, erro, finallyy);
 	}
@@ -19,8 +18,7 @@ function configurarBanco() {
 
 function gerarTabelas(tx) {
 	//CRIANDO AS TABELAS
-	alert("---CRIANDO TABELAS---");
-	
+
 	//PRODUTOS
 	console.log("Configurando tabela PRODUTO...")
 	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO " +
@@ -43,8 +41,6 @@ function gerarTabelas(tx) {
 			"PRODUTO_ID INTEGER, " +
 			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
 			")");
-	
-	alert("TABELAS CRIADAS");
 }
 
 function produtoListarTodos() {

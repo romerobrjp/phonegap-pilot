@@ -2,7 +2,7 @@
 	<div data-role="header">
 		<a href="index.html" data-icon="back">Voltar</a>
 		<h2>Novo Produto</h2>
-		<a id="botaoCadastrarProduto" href="index.html" data-icon="check" data-theme="b" data-transition="pop">		
+		<a id="botaoCadastrarProduto" href="#" data-icon="check" data-theme="b" data-transition="pop">		
 			Salvar
 		</a>
 	</div>
@@ -30,11 +30,15 @@
 	  		<img id="produtoImagem" style="display: none; width: 80%; height: 260px;" src="" />
 	 	</div>
 	</div>
-	
-	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
+	<script type="text/javascript" src="js/produtoNovo.js"></script>
 	<script type="text/javascript">
 		$("#produtoNovo").live("pageshow", function(event) {
-// 			navigator.geolocation.getCurrentPosition(onSuccess, onError);
+ 			navigator.geolocation.getCurrentPosition(function(position) {
+ 				initializeGmap(position.coords.latitude, position.coords.longitude );
+			}, function (error) {
+ 			    alert('code: '    + error.code    + '\n' +
+ 			          'message: ' + error.message + '\n');
+ 			});
 			
 			$("#botaoCadastrarProduto").click(function() {
 				produtoCadastrar($('#nome').val(), $('#codigoBarras').val(), $('#produtoImagem').attr('src'), $('#preco').val(), $('#longitude').val(), $('#latitude').val());
