@@ -22,7 +22,9 @@ function gerarTabelas(tx) {
 	console.log("---transacao iniciada---");
 	
 	//PRODUTOS
-	console.log("Configurando tabela PRODUTO...")	
+	console.log("Configurando tabela PRODUTO...")
+	
+	tx.executeSql("DROP TABLE IF EXISTS PRODUTO");
 	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO " +
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -31,29 +33,17 @@ function gerarTabelas(tx) {
 			"IMAGEM BLOB" +
 			")");
 	
-	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('cafe', 3.00)");
-	tx.executeSql("INSERT INTO PRODUTO(NOME, PRECO) VALUES('batata', 1.90)");
-	
 	//PRECOS DOS PRODUTOS
 	console.log("Configurando tabela PRODUTO_PRECOS...")
 	tx.executeSql("CREATE TABLE IF NOT EXISTS PRODUTO_PRECOS " +
 			"(" +
 			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			"VALOR DECIMAL(10,2), " +
+			"PRECO DECIMAL(10,2), " +
 			"DATA DATE, " +
-			"PRODUTO_ID INTEGER, " +
-			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
-			")");
-	
-	//POSICAO
-	console.log("Configurando tabela PRECO_POSICAO...")
-	tx.executeSql("CREATE TABLE IF NOT EXISTS PRECO_POCISAO " +
-			"(" +
-			"ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"LONGITUDE REAL, " +
 			"LATITUDE REAL, " +
-			"PRECO_ID INTEGER, " +
-			"FOREIGN KEY(PRECO_ID) REFERENCES PRODUTO_PRECOS(ID)" +
+			"PRODUTO_ID INTEGER, " +
+			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
 			")");
 	
 	console.log("---transacao finalizada---");
@@ -92,7 +82,9 @@ function testarConsultaBanco() {
 	}
 }
 
-function produtoAdicionar(nome, preco, codigo_barras) {
+function produtoCadastrar(nome, preco, codigo_barras, preco, long, lati) {
+	var produtoId = pesquisarProdutoIdPorNome(nome);
+	
 	if (db) {
 		var sql = "INSERT INTO PRODUTO (NOME, PRECO, CODIGO_BARRAS) VALUES (" + nome + ", " + preco + ", " + codigo_barras + ")";
 		
@@ -102,26 +94,35 @@ function produtoAdicionar(nome, preco, codigo_barras) {
 			}
 		);
 	}
+	
+	if (db) {
+		var sql = "INSERT INTO PRODUTO_PRECOS (PRECO, LONGITUDE, LATITUDE, PRODUTO_ID) VALUES (" + preco + ", " + long + ", " + lati + ", " + produtoId + ")";
+		
+		db.transaction(
+			function(tx) {
+				tx.executeSql(sql);
+			}
+		);
+	}
+	
+	alert("Produto cadastrado com sucesso!");
 	$.mobile.changePage( "index.html", { transition: "slideup"} );
-	testarConsultaBanco();
 }
 
-function pesquisarProdutoPorNome(nome) {
+function pesquisarProdutoIdPorNome(nome) {
 	if (db) {
 		db.transaction(
 			function(tx) {
-				var sql = "SELECT * FROM PRODUTO WHERE NOME LIKE '% ? %'";				
+				var sql = "SELECT * FROM PRODUTO WHERE NOME LIKE '%" + nome + "%'";				
 				tx.executeSql(
 					sql, 
 					[], 
 					function consultaSucesso(tx, results) {
 						var len = results.rows.length;
-					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					    	console.log("Fetch na linha " + i+1);
-					        $('#resultados').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - R$:' + results.rows.item(i).PRECO + '</a> </li>');
+					        produto { id: results.rows.item(i).ID };
 					    }
-					    $('#resultados').listview('refresh');
+					    return produto.id;
 					},
 					function(err) {
 						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
