@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/jquery_mobile.js"></script>	 
-</head> 
+</head>
 
 <body>
 	<div data-role="page" data-title="Home" id="index">
@@ -20,7 +20,7 @@
 		    	<ul>
 		        	<li> <a href="produtoNovo.html" data-role="button" data-icon="plus" data-transition="pop">Novo Produto</a> </li>
 		        	<li> <a href="produtoPesquisa.html" data-role="button" data-icon="search" data-transition="pop">Ver Produtos</a> </li>
-		        	<li> <a href="gps.html" data-role="button" data-icon="star" data-transition="pop">Geo Localização</a> </li>
+		        	<li> <a href="ondeEstou.html" data-role="button" data-icon="star" data-transition="pop">Onde estou?</a> </li>
 		        </ul>
 	        </div>
 	    </div>
@@ -46,14 +46,21 @@
 			// Cordova is ready to be used!
 			//
 			function onDeviceReady() {
-				configurarBanco();
-				testarConsultaBanco();
+				try {
+					configurarBanco();	
+				}
+				catch (e) {
+					alert("configurarBanco(): " + e);	
+				}
+				
+				try {
+					testarConsultaBanco();	
+				}
+				catch (e) {
+					alert("testarConsultaBanco();: " + e);	
+				}
 			}
 	    
-		    $("#produtoPesquisaNome").live("pageshow", function(event) {
-		    	produtoListarTodos();
-			});
-		    
 		    function testarConsultaBanco() {
 				if (db) {
 					db.transaction(
@@ -66,7 +73,7 @@
 									var len = results.rows.length;
 								    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 								    for (var i=0; i<len; i++) {
-								        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - ' + results.rows.item(i).CODIGO_BARRAS + '</a> </li>');
+								        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - </a> </li>');
 								    }
 								    $('#resultados_index').listview('refresh');
 								},
@@ -85,7 +92,11 @@
 						}
 					);	
 				}
+				else {
+					alert("testarConsultaBanco(): Banco nao configurado");
+				}
 			}
+		    
 		</script>	    
 	</div>
 </body>

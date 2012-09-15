@@ -15,11 +15,14 @@ function configurarBanco() {
 	if (db) {
 		db.transaction(gerarTabelas, erro, finallyy);
 	}
+	else {
+		alert("configurarBanco(): Banco nao configurado");
+	}
 }
 
 function gerarTabelas(tx) {
 	//CRIANDO AS TABELAS
-	alert("---CRIANDO TABELAS---");
+	console.log("---CRIANDO TABELAS---");
 	
 	//PRODUTOS
 	console.log("Configurando tabela PRODUTO...")
@@ -44,7 +47,7 @@ function gerarTabelas(tx) {
 			"FOREIGN KEY(PRODUTO_ID) REFERENCES PRODUTO(ID)" +
 			")");
 	
-	alert("TABELAS CRIADAS");
+	console.log("---TABELAS CRIADAS---");
 }
 
 function produtoListarTodos() {
@@ -78,5 +81,8 @@ function produtoListarTodos() {
 			    return true;
 			}
 		);	
+	}
+	else {
+		alert("produtoListarTodos(): Banco nao configurado");
 	}
 }

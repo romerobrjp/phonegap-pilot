@@ -10,7 +10,7 @@ function tirarFoto() {
 		{
 			quality: 50,
 			targetWidth: 120,
-			navigator.camera.DestinationType: Camera.DestinationType.DATA_URL
+			destinationType: Camera.DestinationType.DATA_URL
 		}
 	);
 }
@@ -59,7 +59,7 @@ function produtoCadastrar(nome, codigo_barras, imagem, preco, longi, lati) {
 		);
 	}
 	alert("Produto cadastrado com sucesso!");
-	$.mobile.changePage( "index.html", { transition: "slideup"} );
+	//$.mobile.changePage( "index.html", { transition: "slideup"} );
 }
 
 function pesquisarProdutoIdPorCodigoBarras(codigo_barras) {

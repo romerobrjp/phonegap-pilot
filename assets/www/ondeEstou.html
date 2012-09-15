@@ -1,0 +1,25 @@
+<div data-role="page" id="ondeEstou">
+	<div data-role="header">
+		<a href="index.html" data-icon="home">Home</a>
+		<h1>GeoLocalizacao</h1>		
+	</div>
+
+	<div data-role="content">
+        <div data-role="content" style="padding: 15px" align="center">
+	  		<div id="onde_estou" style="width: 100%; height: 200px"></div>
+        </div>
+	</div>
+	
+	<script type="text/javascript">
+		$("#ondeEstou").live("pageshow", function(event) {
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					initializeGmap(position.coords.latitude, position.coords.longitude, "onde_estou");
+				},
+				function() {
+					alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+				}
+			);
+		});
+	</script>
+</div>

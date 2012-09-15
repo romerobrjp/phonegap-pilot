@@ -19,8 +19,8 @@
 		    <input type="text" name="preco" id="preco" value=""  />
 		    <label for="preco">Codigo de barras:</label>
 		    <input type="text" name="codigoBarras" id="codigoBarras" value=""  />
-		    <input type="hidden" name="latitude" id="latitude" value=""  />
-		    <input type="hidden" name="longitude" id="longitude" value=""  />
+		    <input type="text" name="latitude" id="latitude" value=""  />
+		    <input type="text" name="longitude" id="longitude" value=""  />
 		</div>  	
 	 	
 	     <a href="#" data-role="button" onclick="tirarFoto();">Tirar foto</a>
@@ -34,11 +34,23 @@
 	<script type="text/javascript" charset="utf-8" src="js/produtoNovo.js"></script>
 	<script type="text/javascript">
 		$("#produtoNovo").live("pageshow", function(event) {
-// 			navigator.geolocation.getCurrentPosition(onSuccess, onError);
-			
-			$("#botaoCadastrarProduto").click(function() {
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					initializeGmap(position.coords.latitude, position.coords.longitude, "mapa_container");
+				},
+				function() {
+					alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+				}
+			);
+		});
+		
+		$("#botaoCadastrarProduto").click(function() {
+			try {
 				produtoCadastrar($('#nome').val(), $('#codigoBarras').val(), $('#produtoImagem').attr('src'), $('#preco').val(), $('#longitude').val(), $('#latitude').val());
-			});
+			}
+			catch (e) {
+				alert(e);
+			}
 		});
 	</script>
 </div>
