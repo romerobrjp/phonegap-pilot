@@ -11,7 +11,6 @@ function finallyy() {
 
 function configurarBanco() {
 	db = window.openDatabase("phonegapProject", "1.0", "phonegapProject", (1024 * 1024) * 5);
-
 	if (db) {
 		db.transaction(gerarTabelas, erro, finallyy);
 	}
