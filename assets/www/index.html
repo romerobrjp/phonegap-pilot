@@ -27,6 +27,7 @@
 	        </div>
 	    </div>
 	    
+	    <h2>Ultimos Produtos</h2>
 	    <div data-role="content">
 	        <ol id="resultados_index" data-role="listview" data-theme="b"></ol>
 	    </div>
@@ -60,7 +61,7 @@
 									var len = results.rows.length;
 								    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 								    for (var i=0; i<len; i++) {
-								        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - </a> </li>');
+								        $('#resultados_index').append('<li> <a href="#">' + results.rows.item(i).NOME + ' - ' + results.rows.item(i).CODIGO_BARRAS + ' </a> </li>');
 								    }
 								    $('#resultados_index').listview('refresh');
 								},

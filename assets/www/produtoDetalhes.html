@@ -23,15 +23,10 @@
 		$("#produtoDetalhes").live("pageshow", function(event) {
 			var produtoId = getUrlVars()["produtoId"];
 			var produto = pegarProdutoPorId(produtoId);
-			alert(produto.nome);		
-			$('#produto_imagem').attr('src', produto.imagem);
-			$('#nome').html(produto.nome);
-			$('codigo_barras').html(produto.codigo_barras);
-			
-// 			var precos = pegarPrecosPorId(idProduto);
-// 			for (int i = 0; i < precos.length; i++) {
-// 				$('#lista_precos').append('<li> ' + precos[i] + '</li>');
-// 			}
+			var precos = pegarPrecosPorId(idProduto);
+			for (int i = 0; i < precos.length; i++) {
+				$('#lista_precos').append('<li> ' + precos[i] + '</li>');
+			}
 		});
 	</script>
 </div>

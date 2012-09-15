@@ -89,17 +89,16 @@ function produtoListarTodos() {
 }
 
 function pegarProdutoPorId(id) {
-	var resultado = undefined;
 	if (db) {
 		db.transaction(function(tx) {
 			var sql = "SELECT * FROM PRODUTO WHERE ID = " + id;
 			tx.executeSql(
 					sql, 
-					[], 
-					function consultaSucesso(tx, results) {
-						
-						
-						resultado = { 'nome': results.rows.item(0).NOME, 'codigo_barras': results.rows.item(0).CODIGO_BARRAS }
+					[],
+					produtoJson = function consultaSucesso(tx, results) {
+						$('#produto_imagem').attr('src', 'data:image/jpeg;base64,' + results.rows.item(0).IMAGEM);
+						$('#produto_nome').html(results.rows.item(0).NOME);
+						$('#codigo_barras').html(results.rows.item(0).CODIGO_BARRAS);
 					},
 					function(err) {
 						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
@@ -112,5 +111,33 @@ function pegarProdutoPorId(id) {
 					return true;
 				});
 	}
-	return resultado;
+}
+
+
+function pegarPrecosPorId(id) {
+	if (db) {
+		db.transaction(function(tx) {
+			var sql = "SELECT * FROM PRODUTO_PRECOS WHERE PRODUTO_ID = " + id;
+			tx.executeSql(
+					sql, 
+					[], 
+					function consultaSucesso(tx, results) {
+						var len = results.rows.length;
+						var precos = [];
+						for (var i=0; i<len; i++) {
+							precos.push(results.rows.item(i).PRECO);
+						}
+						return precos;
+					},
+					function(err) {
+						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
+					})
+				}, function errorCB(err) {
+					alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+					return false;
+				}, function successCB() {
+					console.log("Sucesso na consulta de Prodito por ID!");
+					return true;
+				});
+	}
 }
