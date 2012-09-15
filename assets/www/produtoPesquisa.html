@@ -8,4 +8,10 @@
 		<a href="produtoPesquisaNome.html" data-role="button" >Nome</a>
 	    <a href="#" data-role="button" onclick="lerCodigoBarras();">Codigo de barras</a>
 	</div>
+	
+	<script type="text/javascript">
+		$("#produtoPesquisaNome").click("pageshow", function(event) {
+			pegarProdutoIdPorCodigoBarras();
+		});
+	</script>
 </div>

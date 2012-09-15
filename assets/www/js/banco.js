@@ -61,8 +61,9 @@ function produtoListarTodos() {
 						var len = results.rows.length;
 					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					        $('#listaTodosProdutos').append('<li> <img src="' + results.rows.item(i).IMAGEM + '" widht="100%" length="50%"> <br/> <a href="#">' + 
-					        		results.rows.item(i).NOME + '<ul> <li> R$:' + results.rows.item(i).PRECO + ' - ' + results.rows.item(i).CODIGO_BARRAS + '</li> </ul> </a> </li>');
+					        $('#listaTodosProdutos').append('<li> <img src="data:image/jpeg;base64,' + results.rows.item(i).IMAGEM + 
+					        		'" widht="100%" length="50%"> <br/> <a href="produtoDetalhes.html?produtoId=' + results.rows.item(i).ID + '">' + 
+					        		results.rows.item(i).NOME + '<ul> <li>' + results.rows.item(i).CODIGO_BARRAS + '</li> </ul> </a> </li>');
 					    }
 					    $('#listaTodosProdutos').listview('refresh');
 					},
@@ -84,4 +85,32 @@ function produtoListarTodos() {
 	else {
 		alert("produtoListarTodos(): Banco nao configurado");
 	}
+
+}
+
+function pegarProdutoPorId(id) {
+	var resultado = undefined;
+	if (db) {
+		db.transaction(function(tx) {
+			var sql = "SELECT * FROM PRODUTO WHERE ID = " + id;
+			tx.executeSql(
+					sql, 
+					[], 
+					function consultaSucesso(tx, results) {
+						
+						
+						resultado = { 'nome': results.rows.item(0).NOME, 'codigo_barras': results.rows.item(0).CODIGO_BARRAS }
+					},
+					function(err) {
+						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
+					})
+				}, function errorCB(err) {
+					alert("Erro no db.transaction: " + err.code + ' - ' + err.message);
+					return false;
+				}, function successCB() {
+					console.log("Sucesso na consulta de Prodito por ID!");
+					return true;
+				});
+	}
+	return resultado;
 }

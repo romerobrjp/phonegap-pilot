@@ -1,14 +1,17 @@
+var imagem;
+
 function tirarFoto() {
 	navigator.camera.getPicture(
 		function(imageData) {
 			$("#produtoImagem").css('display', 'block');
 			$("#produtoImagem").attr('src', "data:image/jpeg;base64," + imageData);
+			imagem = imageData;
 		},
 		function(message) {
 			alert('Captura de imagem falhou: ' + message);
 		},
 		{
-			quality: 50,
+			quality: 100,
 			targetWidth: 120,
 			destinationType: Camera.DestinationType.DATA_URL
 		}
@@ -33,36 +36,48 @@ function produtoCadastrar(nome, codigo_barras, imagem, preco, longi, lati) {
 		var sql = "INSERT INTO PRODUTO (NOME, CODIGO_BARRAS, IMAGEM) VALUES ('" + nome + "', '" + codigo_barras + "', '" + imagem + "')";
 		db.transaction(
 				function(tx) {
-					alert("INICIANDO INSERT");
 					tx.executeSql(sql);
-					alert("EXECUTOU INSERT");
 				},
 				function errorCB(err) {
 					alert("Erro ao inserir Produto: " + err.code + ' - ' + err.message);
 					return false;
 				},
 				function successCB() {
-					alert("Sucesso ao inserir Produto!");
+					alert("Sucesso ao inserir tabela Produto!");
 					return true;
 				});
 	}
 	
 	var produtoId = pesquisarProdutoIdPorCodigoBarras(codigo_barras);
-	if (db) {
+	
+	if (db && produtoId) {
+		alert("produtoId existe! Inserindo na segunda tabela!");
 		var sql = "INSERT INTO PRODUTO_PRECOS (PRECO, DATA, LONGITUDE, LATITUDE, PRODUTO_ID) VALUES (" + preco + ", date('now'), " + longi + ", " + lati + ", " + produtoId + ")";
 		db.transaction(
 				function(tx) {
 					tx.executeSql(sql);
-				});
+					alert("EXECUTOU INSERT PRODUTO NA SEGUNDA TABELA");
+				},
+				function errorCB(err) {
+					alert("Erro ao inserir Produto: " + err.code + ' - ' + err.message);
+					return false;
+				},
+				function successCB() {
+					console.log("Sucesso ao inserir tabela Produto!");
+					return true;
+				}
+		);
 	}
+	
 	alert("Produto cadastrado com sucesso!");
+	
 	$.mobile.changePage( "index.html", { transition: "slideup"} );
 }
 
 function pesquisarProdutoIdPorCodigoBarras(codigo_barras) {
 	if (db) {
 		db.transaction(function(tx) {
-			var sql = "SELECT * FROM PRODUTO WHERE CODIGO_BARRAS='" + codigo_barras + "'";
+			var sql = "SELECT * FROM PRODUTO WHERE CODIGO_BARRAS = '" + codigo_barras + "'";
 			tx.executeSql(
 					sql, 
 					[], 
