@@ -123,9 +123,11 @@ function pegarPrecosPorId(id) {
 					[], 
 					function consultaSucesso(tx, results) {
 						var len = results.rows.length;						
-						alert(results.rows.item(i).PRODUTO_ID + ' tem ' + results.rows.item(i).PRECO + ' precos')
 						for (var i=0; i<len; i++) {
 							$('#lista_precos').append('<li> ' + results.rows.item(i).PRECO + ' - ' + results.rows.item(i).DATA + '</li>');
+						}
+						if (len == 0) {
+							$('#lista_precos').append('<li> Nenhm preco cadastrado </li>');
 						}
 					},
 					function(err) {

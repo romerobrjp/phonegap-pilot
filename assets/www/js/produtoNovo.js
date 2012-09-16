@@ -50,8 +50,9 @@ function produtoCadastrar(nome, codigo_barras, imagem, preco, longi, lati) {
 	
 	var produtoId = pesquisarProdutoIdPorCodigoBarras(codigo_barras);
 	
-	if (db && produtoId) {
+	if (db) {
 		alert("produtoId existe! Inserindo na segunda tabela!");
+		alert(preco + " - " + longi + " - " + lati + " - " + produtoId); 
 		var sql = "INSERT INTO PRODUTO_PRECOS (PRECO, DATA, LONGITUDE, LATITUDE, PRODUTO_ID) VALUES (" + preco + ", date('now'), " + longi + ", " + lati + ", " + produtoId + ")";
 		db.transaction(
 				function(tx) {

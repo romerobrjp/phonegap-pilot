@@ -5,12 +5,12 @@
 	</div>
 
 	<div data-role="content">
-		<img id="produto_imagem" style="width:100%"/>
-		
 		<div id="detalhes">
 	       <h1 id="produto_nome"></h1>
-	       <p id="codigo_barras" style="color:#CCC"></p>
+	       <p id="codigo_barras"></p>
 	   	</div>
+	
+		<img id="produto_imagem" width="100%" height="260px" />
 	   	
 	   	<div style="clear:both"></div>
 	   	
@@ -23,6 +23,7 @@
 		$("#produtoDetalhes").live("pageshow", function(event) {
 			var produtoId = getUrlVars()["produtoId"];
 			var produto = pegarProdutoPorId(produtoId);
+			pegarPrecosPorId(produtoId);
 		});
 	</script>
 </div>
