@@ -61,9 +61,9 @@ function produtoListarTodos() {
 						var len = results.rows.length;
 					    console.log("Tabela PRODUTO tem: " + len + " linha(s).");
 					    for (var i=0; i<len; i++) {
-					        $('#listaTodosProdutos').append('<li> <img src="data:image/jpeg;base64,' + results.rows.item(i).IMAGEM + 
-					        		'" widht="100%" length="50%"> <br/> <a href="produtoDetalhes.html?produtoId=' + results.rows.item(i).ID + '">' + 
-					        		results.rows.item(i).NOME + '<ul> <li>' + results.rows.item(i).CODIGO_BARRAS + '</li> </ul> </a> </li>');
+					        $('#listaTodosProdutos').append('<li> <a href="produtoDetalhes.html?produtoId=' + results.rows.item(i).ID + '"> ' +
+					        		'<img src="data:image/jpeg;base64,' + results.rows.item(i).IMAGEM + '" widht="100%" length="50%"> ' + 
+					        		results.rows.item(i).NOME + ' - ' + results.rows.item(i).CODIGO_BARRAS + ' </a> </li>');
 					    }
 					    $('#listaTodosProdutos').listview('refresh');
 					},
@@ -122,12 +122,11 @@ function pegarPrecosPorId(id) {
 					sql, 
 					[], 
 					function consultaSucesso(tx, results) {
-						var len = results.rows.length;
-						var precos = [];
+						var len = results.rows.length;						
+						alert(results.rows.item(i).PRODUTO_ID + ' tem ' + results.rows.item(i).PRECO + ' precos')
 						for (var i=0; i<len; i++) {
-							precos.push(results.rows.item(i).PRECO);
+							$('#lista_precos').append('<li> ' + results.rows.item(i).PRECO + ' - ' + results.rows.item(i).DATA + '</li>');
 						}
-						return precos;
 					},
 					function(err) {
 						alert('Erro no executeSQL: ' + err.code + ' - ' + err.message);
